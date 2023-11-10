@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace ConsoleApp1
 {
     internal class function
     {
+
         public static void PrintHat(string name)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -19,112 +21,30 @@ namespace ConsoleApp1
             {
                 Console.Write("-");
             }
+            Console.WriteLine();
+            string text = "  Имя файла:                                               Дата создания файла:                                                 | *Для создания файла:";
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(" F1");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(0, 3);
+            Console.Write("                                                                                                                                | *Для создания папки:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(" F2");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("                                                                                                                                | *Для удаления файла:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(" F3");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(0, 3);
+            Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------");
         }
 
-        public static int ArrowMenuFirst(int length)
+        public static void PrintSpace(FileSystemInfo item)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            int position = 2;
-            Console.SetCursorPosition(0, position);
-            Console.WriteLine("->");
-            ConsoleKey key;
-            do
+            for (int i = 0; i < 57-item.Name.Length; i++)
             {
-                key = Console.ReadKey().Key;
-
-                Console.SetCursorPosition(0, position);
-                Console.WriteLine("  ");
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        if (position > 2) position--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        if (position <= length) position++;
-                        break;
-                    case ConsoleKey.Escape:
-                        return -1;
-                }
-                Console.SetCursorPosition(0, position);
-                Console.WriteLine("->");
-            }
-            while (key != ConsoleKey.Enter);
-            Console.Clear();
-            return position - 2;
-        }
-
-        public static int ArrowMenuMain(FileSystemInfo[] allItems)
-        {
-            int length = allItems.Length;
-            Console.ForegroundColor = ConsoleColor.White;
-            int position = 2;
-            Console.SetCursorPosition(0, position);
-            Console.WriteLine("->");
-            ConsoleKey key;
-            do
-            {
-                key = Console.ReadKey().Key;
-
-                Console.SetCursorPosition(0, position);
-                Console.WriteLine("  ");
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:ы
-                        if (position > 2) position--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        if (position <= length) position++;
-                        break;
-                    case ConsoleKey.Escape:
-                        return -1;
-                }
-                Console.SetCursorPosition(0, position);
-                Console.WriteLine("->");
-            }
-            while (key != ConsoleKey.Enter);
-
-            Open(allItems[position - 2]);
-            return 1;
-        }
-
-        public static void OpenFolder(DirectoryInfo mainDirectory)
-        {
-            int wait;
-            do
-            {
-                Console.Clear();
-                FileSystemInfo[] items = mainDirectory.GetFileSystemInfos();
-
-                PrintHat(mainDirectory.Name);
-
-                foreach (var item in items)
-                {
-                    if ((item.Attributes & FileAttributes.ReparsePoint) == 0)
-                    {
-                        Console.WriteLine($"  {item.Name}");
-                    }
-                }
-                wait = ArrowMenuMain(items);
-            }
-            while (wait != -1);
-        }
-
-        public static void OpenFile(FileInfo file)
-        {
-
-        }
-
-        public static void Open(FileSystemInfo item)
-        {
-            PrintHat(item.Name);
-
-            if (item is DirectoryInfo directory)
-            {
-                OpenFolder(directory);
-            }
-            else if (item is FileInfo file)
-            {
-                OpenFile(file);
+                Console.Write(" ");
             }
         }
     }
